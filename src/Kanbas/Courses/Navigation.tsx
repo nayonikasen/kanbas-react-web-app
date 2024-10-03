@@ -56,6 +56,14 @@ export default function CoursesNavigation() {
         {" "}
         Quizzes{" "}
       </Link>
+      <Link
+        to="/Kanbas/Courses/1234/Grades"
+        id="wd-course-assignments-link"
+        className="list-group-item text-danger border border-0"
+      >
+        {" "}
+        Grades{" "}
+      </Link>
 
       <Link
         to="/Kanbas/Courses/1234/People"
@@ -64,6 +72,15 @@ export default function CoursesNavigation() {
       >
         {" "}
         People{" "}
+      </Link>
+
+      <Link
+        to="/Kanbas/Courses/1234/Settings"
+        id="wd-course-assignments-link"
+        className="list-group-item text-danger border border-0"
+      >
+        {" "}
+        Settings{" "}
       </Link>
     </div>
   );
