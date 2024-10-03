@@ -1,119 +1,260 @@
+import { Link } from "react-router-dom";
+
 export default function AssignmentEditor() {
-    return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name"><h3>Assignment Name</h3></label>
-        <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description">
-          The assignment is available online.
-          Submit a link to the landing page of your web application running on Netlify.
-          The landing page should include the following: 
-          Your full name and section  links to the labs assignment and kanbas assignment. 
-          Links to all source code repositories. 
-          Kanbas application should have a link to navigate back to the landing page.
-        </textarea>
-        <br /><br />
-        <table>
-            <tr>
-                <td align="right" valign="top">
-                    <label htmlFor="wd-points">Points</label>
-                </td>
-                <td>
-                    <input id="wd-points" value={100} />
-                </td>
-            </tr>
-            <br />
-            <tr>
-                <td align="right" valign="top">
-                    <label id="wd-group" htmlFor="wd-wd-group">Assignment Group</label>
-                </td>
-                <td>
-                    <select id="wd-group">
-                        <option selected value="Publish All">Assignment</option>
-                        <option value="Publish Selected">Non-Assignment</option>
-                    </select>
-                </td>
-            </tr><br />
-            <tr>
-                <td align="right" valign="top">
-                    <label id="wd-display-grade-as" htmlFor="wd-display-grade-as">Display Grade as</label>
-                </td>
-                <td>
-                    <select id="wd-display-grade-as">
-                        <option selected value="Publish All">Percentage</option>
-                        <option value="Publish Selected">GPA</option>
-                    </select>
-                </td>
-            </tr><br />
-            <tr>
-                <td align="right" valign="top">
-                    <label id="wd-submission-type" htmlFor="wd-submission-type">Submission Type</label>
-                </td>
-                <td>
-                    <select id="wd-submission-type">
-                        <option selected value="Publish All">Online</option>
-                        <option value="Publish Selected">Offline</option>
-                    </select>
-                    
-                    <br /><br />
+  return (
+    <div id="wd-assignments-editor">
+      <label htmlFor="wd-name">
+        <h5>Assignment Name</h5>
+      </label>
+      <div className="input-group mb-4">
+        <input id="wd-name" className="form-control" value="A1 - ENV + HTML" />
+      </div>
 
-                    <label>Online Entry Options</label><br/>
-                        <input type="checkbox" name="check-genre" id="wd-chkbox-comedy"/>
-                        <label id ="wd-text-entry" htmlFor="wd-text-entry">Text Entry</label><br/>
+      <div className="input-group mb-4">
+        <div
+          contentEditable
+          className="form-control"
+          style={{ minHeight: "11em", border: "1px solid #ced4da" }}
+        >
+          The assignment is{" "}
+          <span style={{ color: "red" }}>available online</span>. Submit a
+          landing page of your Web Application running on Netlify.
+          <br />
+          <br />
+          The landing page should include the following:
+          <br />
+          <br />
+          • Your full name and section
+          <br />
+          • Links to each of the lab assignments
+          <br />
+          • Link to the Kanbas application
+          <br />
+          • Links to all the relevant source code repositories
+          <br />
+          <br />
+          The Kanbas application should include a link to navigate back to the
+          landing page.
+        </div>
+      </div>
 
-                        <input type="checkbox" name="check-genre" id="wd-chkbox-drama"/>
-                        <label id="wd-website-url" htmlFor="wd-website-url">Website URL</label><br/>
+      <div id="wd-css-responsive-forms-2">
+        <form>
+          <div className="row mb-3">
+            <label
+              htmlFor="wd-points"
+              className="text-end col-sm-3 col-form-label"
+            >
+              Points
+            </label>
+            <div className="col-sm-9">
+              <input id="wd-points" className="form-control" value={100} />
+            </div>
+          </div>
+          <div className="row mb-3">
+            <label
+              htmlFor="wd-group"
+              className="text-end col-sm-3 col-form-label"
+            >
+              Assignment Group
+            </label>
+            <div className="col-sm-9">
+              <select id="wd-group" className="form-select">
+                <option selected value="Publish All">
+                  Assignment
+                </option>
+                <option value="Publish Selected">Non-Assignment</option>
+              </select>
+            </div>
+          </div>
 
-                        <input type="checkbox" name="check-genre" id="wd-chkbox-scifi"/>
-                        <label id="wd-media-recordings" htmlFor="wd-media-recordings">Media Recordings</label><br/>
+          <div className="row mb-3">
+            <label
+              id="wd-display-grade-as"
+              htmlFor="wd-group"
+              className="text-end col-sm-3 col-form-label"
+            >
+              Display Grade as
+            </label>
+            <div className="col-sm-9">
+              <select id="wd-display-grade-as" className="form-select">
+                <option selected value="Publish All">
+                  Percentage
+                </option>
+                <option value="Publish Selected">GPA</option>
+              </select>
+            </div>
+          </div>
 
-                        <input type="checkbox" name="check-genre" id="wd-chkbox-fantasy"/>
-                        <label id="wd-student-annotation" htmlFor="wd-student-annotation">Student Annotation</label><br />
+          <div className="row mb-3">
+            <label
+              id="wd-submission-type"
+              htmlFor="wd-group"
+              className="text-end col-sm-3 col-form-label"
+            >
+              Submission Type
+            </label>
+            <div className="col-sm-9 border">
+              <select id="wd-submission-type" className="form-select mt-3 mb-3">
+                <option selected value="Publish All">
+                  Online
+                </option>
+                <option value="Publish Selected">Offline</option>
+              </select>
+              <h5>
+                <strong>Online entry options</strong>
+              </h5>
+              <div className="form-check">
+                <input
+                  className="form-check-input mt-2"
+                  type="checkbox"
+                  name="check-genre"
+                  id="wd-chkbox-comedy"
+                />
+                <label
+                  className="form-check-label mt-2"
+                  id="wd-text-entry"
+                  htmlFor="wd-text-entry"
+                >
+                  Text Entry
+                </label>
+                <br />
 
-                        <input type="checkbox" name="check-genre" id="wd-chkbox-fantasy"/>
-                        <label is="wd-file-upload" htmlFor="wd-file-upload">File Uploads</label>
-                </td>
-            </tr><br />
-            <tr>
-                <td align="right" valign="top">
-                    <label htmlFor="wd-assign">Assign</label>
-                </td>
-                <td>
-                    <label htmlFor="wd-assign-to">Assign to</label><br />
-                    <input id="wd-assign-to" value={"Everyone"} />
+                <input
+                  className="form-check-input mt-2"
+                  type="checkbox"
+                  name="check-genre"
+                  id="wd-chkbox-drama"
+                />
+                <label
+                  className="form-check-label mt-2"
+                  id="wd-website-url"
+                  htmlFor="wd-website-url"
+                >
+                  Website URL
+                </label>
+                <br />
 
-                    <br /><br />
-                    <label id="wd-due-date" htmlFor="wd-assign-to"> Due </label><br />
-                    <input type="date"
-                        id="wd-due-date"
-                        value="2024-05-13"/><br/>
+                <input
+                  className="form-check-input mt-2"
+                  type="checkbox"
+                  name="check-genre"
+                  id="wd-chkbox-scifi"
+                />
+                <label
+                  className="form-check-label mt-2"
+                  id="wd-media-recordings"
+                  htmlFor="wd-media-recordings"
+                >
+                  Media Recordings
+                </label>
+                <br />
 
-                    <br />
-                    <tr>
-                        <td>
-                            <label htmlFor="wd-available-from">Available from</label><br />
-                            <input type="date"
-                                id="wd-available-from"
-                                value="2024-05-06"/><br/>
-                        </td>
-                        <td>
-                            <label htmlFor="wd-available-until">Until</label><br />
-                            <input type="date"
-                                id="wd-available-until"
-                                value="2020-05-20"/><br/>
-                        </td>
-                    </tr>
-                </td>
-            </tr>
-      </table>
+                <input
+                  className="form-check-input mt-2"
+                  type="checkbox"
+                  name="check-genre"
+                  id="wd-chkbox-fantasy"
+                />
+                <label
+                  className="form-check-label mt-2"
+                  id="wd-student-annotation"
+                  htmlFor="wd-student-annotation"
+                >
+                  Student Annotation
+                </label>
+                <br />
+
+                <input
+                  className="form-check-input mt-2"
+                  type="checkbox"
+                  name="check-genre"
+                  id="wd-chkbox-fantasy"
+                />
+                <label
+                  className="form-check-label mt-2 mb-4"
+                  id="wd-file-upload"
+                  htmlFor="wd-file-upload"
+                >
+                  File Uploads
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div className="row mb-3">
+            <label
+              id="wd-assign"
+              htmlFor="wd-assign"
+              className="text-end col-sm-3 col-form-label"
+            >
+              Assign
+            </label>
+            <div className="col-sm-9 border">
+              <label htmlFor="wd-assign-to" className="mt-3">
+                <h5>
+                  <strong>Assign to</strong>
+                </h5>
+              </label>
+              <input
+                className="form-control mb-4"
+                id="wd-assign-to"
+                value={"Everyone"}
+              />
+
+              <label htmlFor="wd-due-date">
+                <strong>Due </strong>
+              </label>
+              <input
+                className="form-control mb-4"
+                type="datetime-local"
+                id="wd-due-date"
+                defaultValue="2024-05-13T23:59" // Default date and time
+              />
+              <div className="d-flex mb-4">
+                <div className="flex-fill">
+                  <label htmlFor="wd-available-from">
+                    <strong>Available from</strong>
+                  </label>
+                  <div>
+                    <input
+                      className="form-control"
+                      type="date"
+                      id="wd-available-from"
+                      defaultValue="2024-05-06" // Set to May 20, 2024
+                    />
+                  </div>
+                </div>
+
+                <div className="flex-fill">
+                  <label htmlFor="wd-available-until">
+                    <strong>Until</strong>
+                  </label>
+                  <div>
+                    <input
+                      className="form-control"
+                      type="date"
+                      id="wd-available-until"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
       <hr />
-        <table align="right">
-            <tr >
-                <td align="right">
-                    <button>Cancel</button>
-                    <span style={{ margin: '0 2.5px' }}></span>
-                    <button>Save</button>
-                </td>
-            </tr>
-        </table> 
+
+      <div className="d-flex justify-content-end">
+        <Link to="./..">
+          <button className="btn btn-secondary me-1">Cancel</button>
+        </Link>
+        <Link to="./..">
+          <button className="btn btn-danger">Save</button>
+        </Link>
+      </div>
     </div>
-);}
+  );
+}
