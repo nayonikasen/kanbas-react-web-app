@@ -1,77 +1,113 @@
+import React from "react";
+import { Link, useParams } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteAssignment } from "./reducer";
+import { FaPlus, FaSearch, FaTrash } from "react-icons/fa";
 import { BsGripVertical } from "react-icons/bs";
-import ModuleControlButtons from "../Modules/ModuleControlButtons";
-import LessonControlButtons from "../Modules/LessonControlButtons";
-import { IoMdArrowDropdown } from "react-icons/io";
-import AssignmentControlButtons from "./AssignmentControlButtons";
-import { FaRegEdit } from "react-icons/fa";
+import { IoEllipsisVertical } from "react-icons/io5";
 import AssignmentControls from "./AssignmentControls";
-import { useParams } from "react-router";
-import { assignments } from "../../Database";
+import GreenCheckmark from "../Modules/GreenCheckMark";
 
-export default function Assignments() {
+function Assignments() {
   const { cid } = useParams();
+  const assignments = useSelector((state: any) =>
+    state.assignmentsReducer.assignments.filter((a: any) => a.course === cid)
+  );
+  const dispatch = useDispatch();
+  const currentUser = useSelector(
+    (state: any) => state.accountReducer.currentUser
+  );
 
   return (
     <div id="wd-assignments">
-      {/* <input id="wd-search-assignment"
-               placeholder="Search for Assignments" />
-        <button id="wd-add-assignment-group">+ Group</button>
-        <button id="wd-add-assignment">+ Assignment</button> */}
-      {/* <h3 id="wd-assignments-title">
-          ASSIGNMENTS 40% of Total <button>+</button>
-        </h3> */}
-      <AssignmentControls /> <br />
-      <br />
-      <br />
-      <br />
-      <ul id="wd-assignment-list" className="list-group rounded-0">
-        <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
-          <div
-            id="wd-assignments-title"
-            className="wd-title p-3 ps-2 bg-secondary"
+      <div className="d-flex justify-content-between align-items-center mb-5">
+        <div className="input-group" style={{ width: "300px" }}>
+          <span className="input-group-text bg-white">
+            <FaSearch />
+          </span>
+          <input
+            type="text"
+            className="form-control border-start-0"
+            placeholder="Search..."
+            aria-label="Search"
+          />
+        </div>
+        <div>
+          <button
+            id="wd-add-assignment-group"
+            className="btn btn-secondary bg-gray ms-2"
           >
+            + Group
+          </button>
+          {currentUser.role === "FACULTY" && (
+            <Link
+              to={`/Kanbas/Courses/${cid}/Assignments/new`}
+              className="btn btn-danger ms-2"
+            >
+              + Assignment
+            </Link>
+          )}
+        </div>
+      </div>
+      <div className="border border-1 border-dark">
+        <h5
+          id="wd-assignments-title"
+          className="p-2 border-bottom border-dark bg-secondary d-flex justify-content-between align-items-center mb-0"
+          style={{ height: "80px" }}
+        >
+          <div>
             <BsGripVertical className="me-2 fs-3" />
-            <IoMdArrowDropdown className="me-1" />
             ASSIGNMENTS
-            <AssignmentControlButtons />
           </div>
-          <ul className="wd-lessons list-group rounded-0">
-            {assignments
-              .filter((a: any) => a.course === cid)
-              .map((a) => (
-                <li className="wd-lesson list-group-item p-3 ps-1">
-                  <div className="d-flex">
-                    <div className="align-self-center me-3">
-                      <BsGripVertical className="me-2 fs-3" />
-                      <FaRegEdit className="me-1 text-success" />
-                    </div>
-                    <div className="align-self-center flex-grow-1">
-                      <a
-                        className="wd-assignment-link"
-                        href={`#/Kanbas/Courses/${cid}/Assignments/${a._id}`}
-                      >
-                        {a.title}
-                      </a>
-                      <br />
-                      <div className="wd-float-left text-danger me-1">
-                        Multiple module
-                      </div>
-                      <div className="wd-float-left me-1">
-                        | <b>Not available until</b> {a.availableUntil} | <br />
-                      </div>
-                      <div className="wd-float-left me-1">
-                        <b>Due</b> {a.dueDate}| {a.points}
-                      </div>
-                    </div>
-                    <div className="align-self-center">
-                      <LessonControlButtons />
-                    </div>
-                  </div>
-                </li>
-              ))}
-          </ul>
-        </li>
-      </ul>
+          <span className="float-end">
+            <span className="border border-1 border-dark bg-white p-2 rounded-5">
+              40% of Total
+            </span>
+            {currentUser.role === "FACULTY" && <FaPlus className="ms-2" />}
+            <IoEllipsisVertical className="fs-4 ms-2" />
+          </span>
+        </h5>
+        <ul
+          id="wd-assignment-list"
+          className="assignment-list-group list-group rounded-0"
+        >
+          {assignments.map((asgn: any) => (
+            <li
+              key={asgn._id}
+              className="wd-assignment-list-item p-2 d-flex align-items-center border border-1"
+            >
+              <AssignmentControls />
+              <div className="ms-2">
+                <Link
+                  to={`/Kanbas/Courses/${cid}/Assignments/${asgn._id}`}
+                  className="wd-assignment-link text-decoration-none text-black"
+                >
+                  {asgn.title}
+                  <p className="wd-assignment-link mb-0 fs-6">
+                    <span className="text-danger">Multiple Modules</span> |{" "}
+                    <b>Not Available until</b> {asgn.availableFrom} |{" "}
+                    {asgn.points}
+                    <br />
+                    <b>Due</b> {asgn.dueDate}
+                  </p>
+                </Link>
+              </div>
+              <div className="ms-auto d-flex">
+                <GreenCheckmark />
+                <IoEllipsisVertical className="fs-4" />
+                {currentUser.role === "FACULTY" && (
+                  <FaTrash
+                    className="fs-4 text-danger"
+                    onClick={() => dispatch(deleteAssignment(asgn._id))}
+                  />
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
+
+export default Assignments;
