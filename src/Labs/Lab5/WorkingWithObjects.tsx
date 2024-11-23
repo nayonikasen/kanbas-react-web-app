@@ -9,15 +9,14 @@ export default function WorkingWithObjects() {
     description: "Create a NodeJS server with ExpressJS",
     due: "2021-10-10",
     completed: false,
-    score: 0,
+    score: "0",
   });
   const [module, setModule] = useState({
     id: 1,
-    name: "NodeJS Module",
-    description: "NodeJS server with ExpressJS",
-    course: "NodeJS",
+    name: "md-name",
+    description: "ms-description",
+    course: "md-course",
   });
-
   const ASSIGNMENT_API_URL = `${REMOTE_SERVER}/lab5/assignment`;
   const MODULE_API_URL = `${REMOTE_SERVER}/lab5/module`;
 
@@ -63,15 +62,15 @@ export default function WorkingWithObjects() {
         className="btn btn-primary float-end"
         href={`${ASSIGNMENT_API_URL}/score/${assignment.score}`}
       >
-        Update Score
+        Update score
       </a>
       <input
         className="form-control w-75"
         id="wd-assignment-score"
-        type="number"
         defaultValue={assignment.score}
+        type="Number"
         onChange={(e) =>
-          setAssignment({ ...assignment, score: Number(e.target.value) })
+          setAssignment({ ...assignment, score: e.target.value })
         }
       />
       <a
@@ -82,56 +81,43 @@ export default function WorkingWithObjects() {
         Update Completed
       </a>
       <input
-        className="form-check-input"
         id="wd-assignment-completed"
+        checked={assignment.completed}
         type="checkbox"
-        value="Completed"
         onChange={(e) =>
-          setAssignment({ ...assignment, completed: Boolean(e.target.value) })
+          setAssignment({ ...assignment, completed: e.target.checked })
         }
       />
-      {/* {{assignment.completed===true ? "checked" : ""}}/> */}
+      completed
       <hr />
-
-      {/* Modules */}
-      <h4>Retrieving Objects (Module)</h4>
-      <a
-        id="wd-retrieve-modules"
-        className="btn btn-primary"
-        href={`${MODULE_API_URL}`}
-      >
-        Get Modules
+      <h4>Module</h4>
+      <a href={`${MODULE_API_URL}`} className="btn btn-primary float-end">
+        Get Module
       </a>
-      <hr />
-      <h4>Retrieving Properties (Module)</h4>
-      <a
-        id="wd-retrieve-module-name"
-        className="btn btn-primary"
-        href={`${MODULE_API_URL}/name`}
-      >
-        Get Name
+      <h4>Module Name</h4>
+      <a href={`${MODULE_API_URL}/name`} className="btn btn-primary float-end">
+        Get Module Name
       </a>
-      <hr />
-      <h4>Modifying Properties (Module)</h4>
+      <h4>Modify Module</h4>
       <a
         id="wd-update-module-name"
-        className="btn btn-primary float-end"
         href={`${MODULE_API_URL}/name/${module.name}`}
+        className="btn btn-primary float-end"
       >
-        Update Name
+        Update module name
       </a>
       <input
         className="form-control w-75"
-        id="wd-module-title"
+        id="wd-module-name"
         defaultValue={module.name}
         onChange={(e) => setModule({ ...module, name: e.target.value })}
       />
       <a
         id="wd-update-module-description"
-        className="btn btn-primary float-end"
         href={`${MODULE_API_URL}/description/${module.description}`}
+        className="btn btn-primary float-end"
       >
-        Update Description
+        Update module description
       </a>
       <input
         className="form-control w-75"
@@ -139,7 +125,6 @@ export default function WorkingWithObjects() {
         defaultValue={module.description}
         onChange={(e) => setModule({ ...module, description: e.target.value })}
       />
-      <hr />
     </div>
   );
 }

@@ -10,12 +10,6 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const signin = async () => {
-    // const user = db.users.find(
-    //   (user: any) =>
-    //     user.username === credentials.username &&
-    //     user.password === credentials.password
-    // );
-    console.log(credentials);
     const user = await client.signin(credentials);
     if (!user) return;
     dispatch(setCurrentUser(user));

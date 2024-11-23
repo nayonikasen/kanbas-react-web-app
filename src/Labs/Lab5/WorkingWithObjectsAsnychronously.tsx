@@ -10,6 +10,7 @@ export default function WorkingWithObjectsAsynchronously() {
   useEffect(() => {
     fetchAssignment();
   }, []);
+
   const updateTitle = async (title: string) => {
     const updatedAssignment = await client.updateTitle(title);
     setAssignment(updatedAssignment);

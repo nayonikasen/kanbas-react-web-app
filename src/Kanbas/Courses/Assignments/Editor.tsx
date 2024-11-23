@@ -1,8 +1,8 @@
 import { useParams, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import * as coursesClient from "../client";
-import * as assignmentsClient from "./client";
+import { useDispatch, useSelector } from "react-redux";
+import * as assignmentClient from "./client";
+import { updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
   const { aid, cid } = useParams();
@@ -20,6 +20,7 @@ export default function AssignmentEditor() {
   };
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [title, setTitle] = useState(assignment?.title || "");
   const [description, setDescription] = useState(assignment?.description || "");
@@ -43,7 +44,7 @@ export default function AssignmentEditor() {
     }
   }, [aid]);
 
-  const handleSubmit = async () => {
+  const submitAssignment = async () => {
     const newAssignment = {
       _id: aid || "", // New assignments won't have an `aid`
       title,
@@ -54,19 +55,15 @@ export default function AssignmentEditor() {
       module,
       course: cid,
     };
-
-    if (aid === "new") {
-      // dispatch(addAssignment(newAssignment));
-      if (cid) {
-        await coursesClient.createAssignmentForCourse(cid, newAssignment);
-      } else {
-        console.error("Course ID is undefined");
-      }
-      navigate(`/Kanbas/Courses/${cid}/Assignments`);
-    } else {
-      // dispatch(updateAssignment(newAssignment));
-      await assignmentsClient.updateAssignment(newAssignment);
-      navigate(`/Kanbas/Courses/${cid}/Assignments`);
+    try {
+      const ass = await assignmentClient.updateAssignment(
+        newAssignment,
+        cid ?? ""
+      );
+      dispatch(updateAssignment(ass));
+      navigate(`/Kanbas/Courses/${cid}/assignments`);
+    } catch (error) {
+      console.error("Error updating assignment:", error);
     }
   };
 
@@ -293,7 +290,7 @@ export default function AssignmentEditor() {
             </button>
           </div>
           <div className="col p-1">
-            <button className="btn btn-danger" onClick={handleSubmit}>
+            <button className="btn btn-danger" onClick={submitAssignment}>
               Submit
             </button>
           </div>
