@@ -1,11 +1,10 @@
-import { IoEllipsisVertical } from "react-icons/io5";
-import GreenCheckmark from "./GreenCheckMark";
 import { BsPlus } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
+import { IoEllipsisVertical } from "react-icons/io5";
+import GreenCheckmark from "./GreenCheckMark";
 import { FaPencil } from "react-icons/fa6";
-import ProtectedEdit from "../../Account/ProtectedEdit";
-
-export default function LessonControlButtons({
+import { useSelector } from "react-redux";
+export default function ModuleControlButtons({
   moduleId,
   deleteModule,
   editModule,
@@ -14,24 +13,25 @@ export default function LessonControlButtons({
   deleteModule: (moduleId: string) => void;
   editModule: (moduleId: string) => void;
 }) {
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  // console.log("Current User: ", currentUser.role);
+  const userRole = currentUser.role;
   return (
     <div className="float-end">
-      <ProtectedEdit>
+      {userRole === "FACULTY" && (
         <FaPencil
           onClick={() => editModule(moduleId)}
           className="text-primary me-3"
         />
-      </ProtectedEdit>
-      <ProtectedEdit>
+      )}
+      {userRole === "FACULTY" && (
         <FaTrash
           className="text-danger me-2 mb-1"
           onClick={() => deleteModule(moduleId)}
         />
-      </ProtectedEdit>
+      )}
       <GreenCheckmark />
-      <ProtectedEdit>
-        <BsPlus className="fs-2" />
-      </ProtectedEdit>
+      <BsPlus className="fs-1" />
       <IoEllipsisVertical className="fs-4" />
     </div>
   );

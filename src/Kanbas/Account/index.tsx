@@ -1,41 +1,48 @@
-import { Routes, Route, Navigate } from "react-router";
-import AccountNavigation from "./Navigation";
-import Signin from "./Signin";
-import Profile from "./Profile";
-import Signup from "./Signup";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import SignIn from "./Signin";
+import SignUp from "./Signup";
+import Profile from "./Profile";
+import AccountNavigation from "./Navigation";
 
-export default function Account() {
+function Accounts() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   return (
-    <div id="wd-account-screen">
+    <div>
       <h2>Account</h2>
-      <table>
-        <tr>
-          <td valign="top">
-            <AccountNavigation />
-          </td>
-          <td valign="top">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Navigate
-                    to={
-                      currentUser
-                        ? "/Kanbas/Account/Profile"
-                        : "/Kanbas/Account/Signin"
+      <div className="d-flex">
+        <AccountNavigation />
+
+        <table>
+          <tbody>
+            <tr>
+              {/* <td valign="top"><AccountNavigation /></td> */}
+              <td valign="top">
+                <Routes>
+                  {/* <Route index element={<Navigate to="SignIn" replace />} /> */}
+                  <Route
+                    path="/"
+                    element={
+                      <Navigate
+                        to={
+                          currentUser
+                            ? "/Kanbas/Account/Profile"
+                            : "/Kanbas/Account/Signin"
+                        }
+                      />
                     }
                   />
-                }
-              />
-              <Route path="/Signin" element={<Signin />} />
-              <Route path="/Profile" element={<Profile />} />
-              <Route path="/Signup" element={<Signup />} />
-            </Routes>
-          </td>
-        </tr>
-      </table>
+                  <Route path="SignIn" element={<SignIn />} />
+                  <Route path="SignUp" element={<SignUp />} />
+                  <Route path="Profile" element={<Profile />} />
+                </Routes>
+                {/* <Profile /> */}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
+export default Accounts;

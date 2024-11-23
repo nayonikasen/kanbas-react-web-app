@@ -1,26 +1,50 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { enrollments } from "./Database";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
-  enrollments: enrollments,
+interface Enrollment {
+  _id: string;
+  user: string;
+  course: string;
+}
+
+interface EnrollmentsState {
+  enrollments: Enrollment[];
+}
+
+const initialState: EnrollmentsState = {
+  enrollments: [],
 };
-// This will hold the enrollment information
-const enrollmentSlice = createSlice({
+
+const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
-    enrollCourse: (state, { payload }) => {
-      state.enrollments.push(payload); // payload is an object like { userId, courseId }
+    setEnrollments: (state, action: PayloadAction<Enrollment[]>) => {
+      state.enrollments = action.payload;
     },
-    unenrollCourse: (state, { payload }) => {
+    enrollCourse: (
+      state,
+      action: PayloadAction<{ user: string; course: string }>
+    ) => {
+      const newEnrollment: Enrollment = {
+        _id: new Date().getTime().toString(),
+        ...action.payload,
+      };
+      state.enrollments.push(newEnrollment);
+    },
+    unenrollCourse: (
+      state,
+      action: PayloadAction<{ user: string; course: string }>
+    ) => {
       state.enrollments = state.enrollments.filter(
-        (enrollment) =>
-          enrollment.course !== payload.course ||
-          enrollment.user !== payload.user
+        (e) =>
+          !(
+            e.user === action.payload.user && e.course === action.payload.course
+          )
       );
     },
   },
 });
 
-export const { enrollCourse, unenrollCourse } = enrollmentSlice.actions;
-export default enrollmentSlice.reducer;
+export const { setEnrollments, enrollCourse, unenrollCourse } =
+  enrollmentsSlice.actions;
+export default enrollmentsSlice.reducer;

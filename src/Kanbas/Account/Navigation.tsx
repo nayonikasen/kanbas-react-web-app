@@ -1,48 +1,33 @@
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ProtectedRoute from "./ProtectedRoute";
 
 export default function AccountNavigation() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
-  const { pathname } = useLocation();
+  const links = currentUser ? ["Profile"] : ["SignIn", "SignUp"];
+
   return (
     <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
-      <NavLink
-        id="wd-account-signin-link"
-        to="/Kanbas/Account/Signin"
-        className={({ isActive }) =>
-          `list-group-item border border-0 ${
-            isActive ? "active" : "text-danger"
-          }`
-        }
-      >
-        Signin
-      </NavLink>
-      <NavLink
-        id="wd-account-signup-link"
-        to="/Kanbas/Account/Signup"
-        className={({ isActive }) =>
-          `list-group-item border border-0 ${
-            isActive ? "active" : "text-danger"
-          }`
-        }
-      >
-        Signup
-      </NavLink>
-      <ProtectedRoute>
-        <NavLink
-          id="wd-account-profile-link"
-          to="/Kanbas/Account/Profile"
-          className={({ isActive }) =>
-            `list-group-item border border-0 ${
-              isActive ? "active" : "text-danger"
-            }`
-          }
+      {links.includes("SignIn") && (
+        <Link to="SignIn" className="list-group-item active border border-0">
+          SignIn
+        </Link>
+      )}
+      {links.includes("SignUp") && (
+        <Link
+          to="SignUp"
+          className="list-group-item text-danger border border-0"
+        >
+          SignUp
+        </Link>
+      )}
+      {links.includes("Profile") && (
+        <Link
+          to="Profile"
+          className="list-group-item text-danger border border-0"
         >
           Profile
-        </NavLink>
-      </ProtectedRoute>
+        </Link>
+      )}
     </div>
   );
 }

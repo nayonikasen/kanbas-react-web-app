@@ -2,20 +2,34 @@ import { MdDoNotDisturbAlt } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
 import { BiImport } from "react-icons/bi";
 import { LiaFileImportSolid } from "react-icons/lia";
-import { MdOutlineHome } from "react-icons/md";
-import { BsFileBarGraph } from "react-icons/bs";
+import { IoNotificationsCircle } from "react-icons/io5";
+import { IoSettings } from "react-icons/io5";
+import { SiSimpleanalytics } from "react-icons/si";
+import { IoMdHome } from "react-icons/io";
 import { TfiAnnouncement } from "react-icons/tfi";
-import { MdNotificationsNone } from "react-icons/md";
-import ProtectedEdit from "../../Account/ProtectedEdit";
+import { useSelector } from "react-redux";
 
-{
-  /* Find more icons */
-}
 export default function CourseStatus() {
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const userRole = currentUser.role;
+
   return (
-    <div id="wd-course-status" style={{ width: "300px" }}>
+    <div
+      id="wd-course-status"
+      style={{
+        width: "300px",
+      }}
+    >
       <h2>Course Status</h2>
-      <ProtectedEdit>
+      {/* <button>Unpublish</button>
+      <button>Publish</button>
+      <button>View Course Notifications</button>
+      <button>View Course Notifications</button>
+      <button>View Course Settings</button>
+      <button>Delete Course</button>
+      <button>View Enrollment</button> */}
+
+      {userRole === "FACULTY" && (
         <div className="d-flex">
           <div className="w-50 pe-1">
             <button className="btn btn-lg btn-secondary w-100 text-nowrap ">
@@ -28,36 +42,59 @@ export default function CourseStatus() {
             </button>
           </div>
         </div>
-        <br />
-      </ProtectedEdit>
-      <ProtectedEdit>
+      )}
+      <br />
+      {userRole === "FACULTY" && (
         <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
           <BiImport className="me-2 fs-5" /> Import Existing Content{" "}
         </button>
-      </ProtectedEdit>
-      <ProtectedEdit>
+      )}
+      {userRole === "FACULTY" && (
         <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
           <LiaFileImportSolid className="me-2 fs-5" /> Import from Commons{" "}
         </button>
-      </ProtectedEdit>
-      <ProtectedEdit>
+      )}
+
+      {/* home page */}
+      {userRole === "FACULTY" && (
         <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
-          <MdOutlineHome className="me-2 fs-5" /> Choose Home Page{" "}
+          <IoMdHome className="me-2 fs-5" /> Choose Home Page{" "}
         </button>
-      </ProtectedEdit>
+      )}
+
+      {/* course screen */}
       <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
-        <BsFileBarGraph className="me-2 fs-5" /> View Course Stream{" "}
+        <IoSettings className="me-2 fs-5" /> View Course Screen{" "}
       </button>
-      <ProtectedEdit>
+
+      {/* delete course
+      <button className="btn btn-lg btn-danger w-100 mt-1 text-start">
+        <MdDeleteForever className="me-2 fs-5" /> Delete Course{" "}
+      </button> */}
+
+      {/* view enrollment
+      <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
+        <CiViewTimeline className="me-2 fs-5" /> View Enrollment{" "}
+      </button> */}
+
+      {/* New Course */}
+      {userRole === "FACULTY" && (
         <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
-          <TfiAnnouncement className="me-2 fs-5" /> New Announcement{" "}
+          <TfiAnnouncement className="me-2 fs-5" /> New Annoucement{" "}
         </button>
-      </ProtectedEdit>
+      )}
+
+      {/* New Analytics */}
+      {userRole === "FACULTY" && (
+        <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
+          <SiSimpleanalytics className="me-2 fs-5" /> New Analytics{" "}
+        </button>
+      )}
+
+      {/* course notifications */}
       <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
-        <BsFileBarGraph className="me-2 fs-5" /> New Analytics{" "}
-      </button>
-      <button className="btn btn-lg btn-secondary w-100 mt-1 text-start">
-        <MdNotificationsNone className="me-2 fs-5" /> View Course Notifications{" "}
+        <IoNotificationsCircle className="me-2 fs-5" /> View Course
+        Notifications{" "}
       </button>
     </div>
   );

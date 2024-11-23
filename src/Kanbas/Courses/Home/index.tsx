@@ -1,12 +1,13 @@
-import Modules from "../Modules";
+import Modules from "../Modules/index";
 import CourseStatus from "./Status";
+
 export default function Home() {
   return (
-    <div className="d-flex" id="wd-home">
-      <div className="flex-fill">
+    <div className="row">
+      <div className="col-12 col-lg-8">
         <Modules />
       </div>
-      <div className="d-none d-lg-block" style={{ marginLeft: "20px" }}>
+      <div className="col-12 col-lg-4">
         <CourseStatus />
       </div>
     </div>

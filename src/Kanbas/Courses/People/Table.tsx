@@ -1,15 +1,22 @@
-import React from "react";
 import { FaUserCircle } from "react-icons/fa";
+import { enrollments, people } from "../../Database";
 import { useParams } from "react-router";
-import { enrollments, users } from "../../Database";
+import {
+  Key,
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+} from "react";
 
 export default function PeopleTable() {
   const { cid } = useParams();
-  const userids = enrollments
-    .filter((a: any) => a.course === cid)
-    .map((a) => a.user); // ['use1', 'user2'....]
-
-  const enrolledUsers = users.filter((user) => userids.includes(user._id));
+  const enrolledUserIds = enrollments
+    .filter((e: { course: string | undefined }) => e.course === cid)
+    .map((m: { user: any }) => m.user);
+  const enrolledUsers = people.filter((p: { _id: any }) =>
+    enrolledUserIds.includes(p._id)
+  );
 
   return (
     <div id="wd-people-table">
@@ -24,23 +31,89 @@ export default function PeopleTable() {
             <th>Total Activity</th>
           </tr>
         </thead>
-        {enrolledUsers.map((user) => (
-          <tbody>
-            <tr>
-              <td className="wd-full-name text-nowrap">
-                <FaUserCircle className="me-2 fs-1 text-secondary" />
-                <span className="wd-first-name">{user.firstName}</span>{" "}
-                <span className="wd-last-name">{user.lastName}</span>
-              </td>
-              <td className="wd-login-id">{user.loginId}</td>
-              <td className="wd-section">{user._id}</td>
-              <td className="wd-role">{user.role}</td>
-              <td className="wd-last-activity">{user.lastActivity}</td>
-              <td className="wd-total-activity">{user.totalActivity}</td>
-            </tr>
-            {/* Add at least 3 more users such as Bruce Wayne, Steve Rogers, and Natasha Romanoff */}
-          </tbody>
-        ))}
+        <tbody>
+          {enrolledUsers.map(
+            (eu: {
+              _id: Key | null | undefined;
+              firstName:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              lastName:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              loginId:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              section:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              role:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              lastActivity:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+              totalActivity:
+                | string
+                | number
+                | boolean
+                | ReactElement<any, string | JSXElementConstructor<any>>
+                | Iterable<ReactNode>
+                | ReactPortal
+                | null
+                | undefined;
+            }) => (
+              <tr key={eu._id}>
+                <td className="wd-full-name text-nowrap">
+                  <FaUserCircle className="me-2 fs-1 text-secondary" />
+                  <span className="wd-first-name">{eu.firstName}</span>{" "}
+                  <span className="wd-last-name">{eu.lastName}</span>
+                </td>
+                <td className="wd-login-id">{eu.loginId}</td>
+                <td className="wd-section">{eu.section}</td>
+                <td className="wd-role">{eu.role}</td>
+                <td className="wd-last-activity">{eu.lastActivity}</td>
+                <td className="wd-total-activity">{eu.totalActivity}</td>{" "}
+              </tr>
+            )
+          )}
+        </tbody>
       </table>
     </div>
   );
