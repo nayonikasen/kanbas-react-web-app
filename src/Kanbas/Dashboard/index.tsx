@@ -155,13 +155,7 @@ export default function Dashboard({
                       to={`/Kanbas/Courses/${course._id}/Home`}
                       className="wd-dashboard-course-link text-decoration-none text-dark"
                     > */}
-                    <img
-                      src={
-                        "https://miro.medium.com/v2/1*K0a7xINk0RM5gfXGSN68cw.png"
-                      }
-                      width="100%"
-                      height={160}
-                    />
+                    <img src="/images/NEU.png" width="100%" height={160} />
                     <div className="card-body">
                       <h5 className="wd-dashboard-course-title card-title">
                         {course.name}
@@ -205,13 +199,7 @@ export default function Dashboard({
                   style={{ width: "300px" }}
                 >
                   <div className="card rounded-3 overflow-hidden">
-                    <img
-                      src={
-                        "https://miro.medium.com/v2/1*K0a7xINk0RM5gfXGSN68cw.png"
-                      }
-                      width="100%"
-                      height={160}
-                    />
+                    <img src="/images/NEU.png" width="100%" height={160} />
                     <div className="card-body">
                       <h5 className="wd-dashboard-course-title card-title">
                         {course.name}

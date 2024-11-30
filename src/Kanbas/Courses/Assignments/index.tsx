@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { setAssignments, deleteAssignment, addAssignment } from "./reducer";
+import { setAssignments } from "./reducer";
 import * as assignmentClient from "./client";
 import { FaPlus, FaSearch, FaTrash } from "react-icons/fa";
 import { BsGripVertical } from "react-icons/bs";
@@ -41,15 +41,6 @@ export default function Assignments() {
       );
       setStateAssignments(assn);
       dispatch(setAssignments(assn));
-    } catch (error) {
-      console.error("Error deleting assignment:", error);
-    }
-  };
-
-  const addingAssignment = async () => {
-    try {
-      const ass = await assignmentClient.create(cid ?? "");
-      dispatch(addAssignment(ass));
     } catch (error) {
       console.error("Error deleting assignment:", error);
     }

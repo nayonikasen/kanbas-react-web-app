@@ -4,7 +4,7 @@ const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 
 export const updateAssignment = async (assignment: any, courseId: string) => {
   const { data } = await axios.put(
-    `${COURSES_API}/courses/${courseId}/assignments/${assignment._id}`,
+    `${COURSES_API}/${courseId}/assignments/${assignment._id}`,
     assignment
   );
   return data;

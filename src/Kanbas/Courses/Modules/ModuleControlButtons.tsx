@@ -14,7 +14,7 @@ export default function ModuleControlButtons({
   editModule: (moduleId: string) => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  // console.log("Current User: ", currentUser.role);
+
   const userRole = currentUser.role;
   return (
     <div className="float-end">

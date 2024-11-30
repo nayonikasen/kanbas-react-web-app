@@ -9,8 +9,6 @@ export default function Session({ children }: { children: any }) {
     try {
       const currentUser = await client.profile();
       dispatch(setCurrentUser(currentUser));
-      // console.log("current user", currentUser);
-      console.log("Here");
     } catch (err: any) {
       console.error(err);
     }

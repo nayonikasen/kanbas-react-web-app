@@ -9,9 +9,9 @@ export default function Profile() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kanbas/Account/Signin");
     setProfile(currentUser);
-    console.log(currentUser);
+    if (!currentUser) return navigate("/Kanbas/Account/Signin");
+    dispatch(setCurrentUser(currentUser));
   };
   const signout = async () => {
     await client.signout();

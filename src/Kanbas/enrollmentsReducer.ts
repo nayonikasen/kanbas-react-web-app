@@ -21,30 +21,20 @@ const enrollmentsSlice = createSlice({
     setEnrollments: (state, action: PayloadAction<Enrollment[]>) => {
       state.enrollments = action.payload;
     },
-    enrollCourse: (
-      state,
-      action: PayloadAction<{ user: string; course: string }>
-    ) => {
+    enrollCourse: (state, action: PayloadAction<{ user: string; course: string }>) => {
       const newEnrollment: Enrollment = {
         _id: new Date().getTime().toString(),
         ...action.payload,
       };
       state.enrollments.push(newEnrollment);
     },
-    unenrollCourse: (
-      state,
-      action: PayloadAction<{ user: string; course: string }>
-    ) => {
+    unenrollCourse: (state, action: PayloadAction<{ user: string; course: string }>) => {
       state.enrollments = state.enrollments.filter(
-        (e) =>
-          !(
-            e.user === action.payload.user && e.course === action.payload.course
-          )
+        e => !(e.user === action.payload.user && e.course === action.payload.course)
       );
     },
   },
 });
 
-export const { setEnrollments, enrollCourse, unenrollCourse } =
-  enrollmentsSlice.actions;
+export const { setEnrollments, enrollCourse, unenrollCourse } = enrollmentsSlice.actions;
 export default enrollmentsSlice.reducer;

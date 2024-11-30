@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import SignIn from "./Signin";
+import SignIn from "./signin";
 import SignUp from "./Signup";
 import Profile from "./Profile";
 import AccountNavigation from "./Navigation";

@@ -4,10 +4,9 @@ import Dashboard from "./Dashboard/index";
 import Courses from "./Courses/index";
 import AccountNavigation from "./Navigation";
 import "./styles.css";
-import * as db from "./Database";
 import { useEffect, useState } from "react";
 import store from "./store";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/Session";
 import * as courseClient from "./Courses/client";
@@ -17,11 +16,11 @@ import { fetchAllCourses } from "./Courses/client";
 const Kanbas = () => {
   const [courses, setCourses] = useState<any[]>([]);
   const [allCourses, setAllCourses] = useState<any[]>([]);
+  const [enrollments, setEnrollments] = useState<any[]>([]);
 
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
   const fetchCourses = async () => {
-    console.log("Fetching courses...");
     let courses = [];
     try {
       courses = await userClient.findMyCourses();
@@ -67,20 +66,22 @@ const Kanbas = () => {
   };
 
   const updateCourse = async () => {
-    await courseClient.updateCourse(course);
-    setCourses(
-      courses.map((c) => {
+    const updatedCourse = await courseClient.updateCourse(course);
+
+    setEnrollments(
+      enrollments.map((c: { _id: any }) => {
         if (c._id === course._id) {
-          return course;
+          return updatedCourse;
         } else {
           return c;
         }
       })
     );
+
     setAllCourses(
       allCourses.map((c) => {
         if (c._id === course._id) {
-          return course;
+          return updatedCourse;
         } else {
           return c;
         }
@@ -109,7 +110,7 @@ const Kanbas = () => {
                     element={
                       <ProtectedRoute>
                         <Dashboard
-                          courses={courses}
+                          courses={enrollments}
                           course={course}
                           setCourse={setCourse}
                           addNewCourse={addNewCourse}
