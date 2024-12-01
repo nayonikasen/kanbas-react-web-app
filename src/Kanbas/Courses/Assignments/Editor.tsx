@@ -17,6 +17,7 @@ export default function AssignmentEditor() {
     points: 0,
     dueDate: "",
     availableDate: "",
+    availableUntilDate: "",
   };
 
   const navigate = useNavigate();
@@ -31,6 +32,9 @@ export default function AssignmentEditor() {
   const [availableDate, setAvailableDate] = useState(
     assignment?.availableDate || new Date().toISOString().slice(0, 16)
   );
+  const [availableUntilDate, setAvailableUntilDate] = useState(
+    assignment?.availableUntilDate || new Date().toISOString().slice(0, 16)
+  );
   const [module, setModule] = useState(assignment?.module || "");
 
   useEffect(() => {
@@ -41,17 +45,19 @@ export default function AssignmentEditor() {
       setPoints(0);
       setDueDate(new Date().toISOString().slice(0, 16));
       setAvailableDate(new Date().toISOString().slice(0, 16));
+      setAvailableUntilDate(new Date().toISOString().slice(0, 16));
     }
   }, [aid]);
 
   const submitAssignment = async () => {
     const newAssignment = {
-      _id: aid || "", // New assignments won't have an `aid`
+      _id: aid === "new" ? "" : aid ?? "", // New assignments won't have an `aid`
       title,
       description,
       points,
       dueDate,
       availableDate,
+      availableUntilDate,
       module,
       course: cid,
     };
@@ -266,6 +272,8 @@ export default function AssignmentEditor() {
                     type="datetime-local"
                     className="form-control"
                     id="available-to"
+                    value={availableUntilDate}
+                    onChange={(e) => setAvailableUntilDate(e.target.value)}
                   />
                 </div>
               </div>

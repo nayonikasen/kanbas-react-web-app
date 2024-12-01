@@ -3,10 +3,18 @@ const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 const COURSES_API = `${REMOTE_SERVER}/api/courses`;
 
 export const updateAssignment = async (assignment: any, courseId: string) => {
+  if (assignment._id === "") {
+    const { data } = await axios.post(
+      `${COURSES_API}/${courseId}/assignments`,
+      assignment
+    );
+    return data;
+  }
   const { data } = await axios.put(
     `${COURSES_API}/${courseId}/assignments/${assignment._id}`,
     assignment
   );
+
   return data;
 };
 
