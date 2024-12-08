@@ -40,9 +40,10 @@ export default function Modules() {
     const modules = await coursesClient.findModulesForCourse(cid as string);
     dispatch(setModules(modules));
   };
+
   useEffect(() => {
     fetchModules();
-  }, []);
+  }, [currentUser]);
 
   const createModuleForCourse = async () => {
     if (!cid) return;
@@ -92,18 +93,17 @@ export default function Modules() {
       <br />
 
       <ul id="wd-modules" className="list-group rounded-0">
-        {modules
-          // .filter((module: any) => module.course === cid)
-          .map((module: any) => (
-            <li
-              key={module._id}
-              className="wd-module list-group-item p-0 mb-5 fs-5 border-gray"
-            >
-              <div className="wd-title p-3 ps-2 bg-secondary">
-                <BsGripVertical className="me-2 fs-3" />
-                {/* {module.name} {/* Dynamically render the module name */}
-                {!module.editing && module.name}
-                {userRole === "FACULTY" && module.editing && (
+        {modules.map((module: any) => (
+          <li
+            key={module._id}
+            className="wd-module list-group-item p-0 mb-5 fs-5 border-gray"
+          >
+            <div className="wd-title p-3 ps-2 bg-secondary">
+              <BsGripVertical className="me-2 fs-3" />
+              {/* {module.name} {/* Dynamically render the module name */}
+              {!module.editing && module.name}
+              {(userRole === "FACULTY" || userRole === "ADMIN") &&
+                module.editing && (
                   <input
                     className="form-control w-50 d-inline-block"
                     onChange={(e) =>
@@ -119,44 +119,44 @@ export default function Modules() {
                     defaultValue={module.name}
                   />
                 )}
-                <ModuleControlButtons
-                  moduleId={module._id}
-                  // deleteModule={(moduleId) => {
-                  //   dispatch(deleteModule(moduleId));
-                  // }}
-                  deleteModule={(moduleId) => removeModule(moduleId)}
-                  editModule={(moduleId) => dispatch(editModule(moduleId))}
-                />
-              </div>
-              {module.lessons && (
-                <ul className="wd-lessons list-group rounded-0">
-                  {module.lessons.map(
-                    (lesson: {
-                      _id: Key | null | undefined;
-                      name:
-                        | string
-                        | number
-                        | boolean
-                        | ReactElement<any, string | JSXElementConstructor<any>>
-                        | Iterable<ReactNode>
-                        | ReactPortal
-                        | null
-                        | undefined;
-                    }) => (
-                      <li
-                        key={lesson._id}
-                        className="wd-lesson list-group-item p-3 ps-1"
-                      >
-                        <BsGripVertical className="me-2 fs-3" />
-                        {lesson.name}
-                        <LessonControlButtons />
-                      </li>
-                    )
-                  )}
-                </ul>
-              )}
-            </li>
-          ))}
+              <ModuleControlButtons
+                moduleId={module._id}
+                // deleteModule={(moduleId) => {
+                //   dispatch(deleteModule(moduleId));
+                // }}
+                deleteModule={(moduleId) => removeModule(moduleId)}
+                editModule={(moduleId) => dispatch(editModule(moduleId))}
+              />
+            </div>
+            {module.lessons && (
+              <ul className="wd-lessons list-group rounded-0">
+                {module.lessons.map(
+                  (lesson: {
+                    _id: Key | null | undefined;
+                    name:
+                      | string
+                      | number
+                      | boolean
+                      | ReactElement<any, string | JSXElementConstructor<any>>
+                      | Iterable<ReactNode>
+                      | ReactPortal
+                      | null
+                      | undefined;
+                  }) => (
+                    <li
+                      key={lesson._id}
+                      className="wd-lesson list-group-item p-3 ps-1"
+                    >
+                      <BsGripVertical className="me-2 fs-3" />
+                      {lesson.name}
+                      <LessonControlButtons />
+                    </li>
+                  )
+                )}
+              </ul>
+            )}
+          </li>
+        ))}
       </ul>
 
       <DeleteModuleModal

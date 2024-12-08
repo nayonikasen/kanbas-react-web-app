@@ -16,7 +16,7 @@ export default function ModulesControls({
   const userRole = currentUser.role;
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      {userRole === "FACULTY" && (
+      {(userRole === "FACULTY" || userRole === "ADMIN") && (
         <button
           id="wd-add-module-btn"
           className="btn btn-lg btn-danger me-1 float-end"
@@ -31,7 +31,7 @@ export default function ModulesControls({
         </button>
       )}
       <div className="dropdown d-inline me-1 float-end">
-        {userRole === "FACULTY" && (
+        {(userRole === "FACULTY" || userRole === "ADMIN") && (
           <button
             id="wd-publish-all-btn"
             className="btn btn-lg btn-secondary dropdown-toggle"

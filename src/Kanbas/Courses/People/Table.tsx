@@ -8,18 +8,13 @@ import {
   ReactNode,
   ReactPortal,
 } from "react";
+import PeopleDetails from "./Details";
+import { Link } from "react-router-dom";
 
-export default function PeopleTable() {
-  const { cid } = useParams();
-  const enrolledUserIds = enrollments
-    .filter((e: { course: string | undefined }) => e.course === cid)
-    .map((m: { user: any }) => m.user);
-  const enrolledUsers = people.filter((p: { _id: any }) =>
-    enrolledUserIds.includes(p._id)
-  );
-
+export default function PeopleTable({ users = [] }: { users?: any[] }) {
   return (
     <div id="wd-people-table">
+      <PeopleDetails />
       <table className="table table-striped">
         <thead>
           <tr>
@@ -32,7 +27,7 @@ export default function PeopleTable() {
           </tr>
         </thead>
         <tbody>
-          {enrolledUsers.map(
+          {users.map(
             (eu: {
               _id: Key | null | undefined;
               firstName:
@@ -101,9 +96,14 @@ export default function PeopleTable() {
             }) => (
               <tr key={eu._id}>
                 <td className="wd-full-name text-nowrap">
-                  <FaUserCircle className="me-2 fs-1 text-secondary" />
-                  <span className="wd-first-name">{eu.firstName}</span>{" "}
-                  <span className="wd-last-name">{eu.lastName}</span>
+                  <Link
+                    to={`/Kanbas/Account/Users/${eu._id}`}
+                    className="text-decoration-none"
+                  >
+                    <FaUserCircle className="me-2 fs-1 text-secondary" />
+                    <span className="wd-first-name">{eu.firstName}</span>{" "}
+                    <span className="wd-last-name">{eu.lastName}</span>
+                  </Link>
                 </td>
                 <td className="wd-login-id">{eu.loginId}</td>
                 <td className="wd-section">{eu.section}</td>

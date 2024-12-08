@@ -3,6 +3,7 @@ import { enrollments } from "../Database";
 
 const initialState = {
   enrollments: enrollments,
+  courses: [],
   isEnrolling: false,
 };
 
@@ -10,8 +11,11 @@ const enrollmentsSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
-    setEnrollments: (state, { payload: enrollment }) => {
-      state.enrollments = enrollment.payload;
+    setEnrollments: (state, { payload: enrollments }) => {
+      state.enrollments.push(enrollments);
+    },
+    setCourses: (state, { payload: courses }) => {
+      state.courses = courses;
     },
     enrollCourse: (
       state,
@@ -44,6 +48,7 @@ const enrollmentsSlice = createSlice({
 
 export const {
   setEnrollments,
+  setCourses,
   enrollCourse,
   unenrollCourse,
   toggleIsEnrolling,
