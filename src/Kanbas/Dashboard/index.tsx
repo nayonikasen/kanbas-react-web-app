@@ -59,7 +59,7 @@ export default function Dashboard({
       course: courseId,
     });
 
-    getEnrollments();
+    window.location.reload();
   };
 
   const handleUnenroll = async (courseId: string) => {
@@ -69,7 +69,7 @@ export default function Dashboard({
       course: courseId,
     });
 
-    getEnrollments();
+    window.location.reload();
   };
 
   const handleEnrollmentsClick = () => {
